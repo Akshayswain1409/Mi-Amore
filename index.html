@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Our First Anniversary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+       font-family: 'Merriweather', 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background-color: #FAF9F6;
+      color: #4A4A4A;
+      text-align: center;
+    }
+    header {
+      background-color: #FDF6F0;
+      padding: 3rem 1rem 2rem;
+      color: #6E5A61;
+      font-weight: 600;
+    }
+    nav {
+      background-color: #F5EDEA;
+      padding: 1.2rem 0;
+    }
+    nav a {
+      color: #6E5A61;
+      margin: 0 18px;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+    nav a:hover {
+      color: #BFA6A0;
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2.5rem auto 4rem;
+      padding: 0 1.25rem;
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.25rem;
+      font-weight: 700;
+      color: #805C5A;
+    }
+    p.lead {
+      font-size: 1.3rem;
+      margin-bottom: 2.8rem;
+      color: #7C6B6A;
+      font-weight: 400;
+      max-width: 600px;
+    }
+    .graphic {
+      width: 240px;
+      height: 240px;
+      margin-bottom: 3rem;
+      fill: #E3B7B5;
+      filter: drop-shadow(0 0 5px #D8A7A6AA);
+      transition: fill 0.4s ease;
+      cursor: default;
+    }
+    .graphic:hover {
+      fill: #C17776;
+      filter: drop-shadow(0 0 10px #C17776CC);
+    }
+    footer {
+      background-color: #FDF6F0;
+      color: #6E5A61;
+      padding: 1.25rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 2.25rem; }
+      .container { margin-top: 1.5rem; }
+    }
+    /* Photo album styles */
+    .photo-album {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 1rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .photo-album img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(216, 167, 177, 0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .photo-album img:hover,
+    .photo-album img:focus {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(242, 166, 166, 0.5);
+      outline: none;
+    }
+    /* Music section */
+    .music-section audio {
+      width: 100%;
+      max-width: 800px;
+      outline: none;
+      margin-bottom: 2rem;
+    }
+    /* Message section */
+    .message-section {
+      background: #F7E9E7;
+      padding: 1.6rem;
+      border-radius: 15px;
+      font-size: 1.3rem;
+      line-height: 1.6;
+      color: #6E5A61;
+      max-width: 650px;
+      margin: 0 auto 3rem;
+    }
+    /* Lightbox modal styles */
+    #lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+      outline: none;
+    }
+    #lightbox.open {
+      display: flex;
+    }
+    #lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 15px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.8);
+    }
+    #lightbox-close,
+    #lightbox-prev,
+    #lightbox-next {
+      position: absolute;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 3rem;
+      cursor: pointer;
+      padding: 0.25rem 0.75rem;
+      user-select: none;
+      transition: color 0.3s ease;
+      z-index: 10000;
+    }
+    #lightbox-close {
+      top: 1rem;
+      right: 1rem;
+    }
+    #lightbox-prev {
+      top: 50%;
+      left: 1rem;
+      transform: translateY(-50%);
+    }
+    #lightbox-next {
+      top: 50%;
+      right: 1rem;
+      transform: translateY(-50%);
+    }
+    #lightbox-close:hover,
+    #lightbox-prev:hover,
+    #lightbox-next:hover {
+      color: #C17776;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Happy Anniversary Love 🌹</h1>
+  <nav>
+    <a href="#home" onclick="showSection('home')">Home🏠</a>
+	<a href="#music" onclick="showSection('music')">Our Song🎼</a>
+    <a href="#photos" onclick="showSection('photos')">Memories👩‍❤️‍👨</a>
+    <a href="#messages" onclick="showSection('messages')">Letter💌</a>
+  </nav>
+</header>
+<div class="container">
+  <section id="home" style="display: block;">
+    <svg class="graphic" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-label="Heart graphic" role="img" >
+      <path d="M32 58s26-15.6 26-33.1S42.1 6 32 17.8 6 13 6 24.9 32 58 32 58z"/>
+    </svg>
+
+<p class="lead"> A special space for my special one on our special day </p> 
+<p class="lead">Welcome to our own lil world my Cutu that celebrates our love laughter and magic😘</p>
+<p class="lead">✨14/09✨</p>
+  </section>
+  <section id="music" style="display: none;">
+    <h2>Songs that hold a special place for Us😍</h2>
+    <div class="music-section" aria-label="Music player">
+      <audio controls>
+      <source src="https://www.dropbox.com/scl/fi/pyfedqzctr7qzavrl68gz/JAWAN-Chaleya-Hindi-Shah-Rukh-Khan-Nayanthara-Atlee-Anirudh-Arijit-S-Shilpa-R-Kumaar.mp3?rlkey=dwl5waccyn3si7un7eqnujp3g&st=otjg7irc&dl=1" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+ <audio controls>
+      <source src="https://www.dropbox.com/scl/fi/5tp86q4t5ihz0ynf2uaxa/Lyrical-Video-Dildara-Song-Ra.One-ShahRukh-Khan-Kareena-Kapoor.mp3?rlkey=dbestp7ibniem424c7fmnljv0&st=x9sja5iq&dl=1" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+<img src="https://live.staticflickr.com/65535/54784512186_f0d06b780e_n.jpg" alt="Memory 20" tabindex="0" loading="lazy" />
+
+    </div>
+  </section>
+
+  <section id="photos" style="display: none;">	
+    <h2>Capturing some beautiful moments from our lifelong journey so far......❤</h2>
+    <div class="photo-album" aria-label="Photo Album">
+
+      <img src="https://live.staticflickr.com/65535/54780810100_860673b1f0_c.jpg" alt="Memory 1" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780809985_c9bcbed1d4_c.jpg" alt="Memory 2" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54779629737_cb3673a8ec_b.jpg" alt="Memory 3" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54785072963_15d0236664_b.jpg" alt="Memory 4" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54782176239_d742dd0fdb_b.jpg" alt="Memory 5" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54779602787_c653071e81_b.jpg" alt="Memory 6" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780716848_715f41593c_b.jpg" alt="Memory 7" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780706754_7a75b1e181_b.jpg" alt="Memory 8" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780809705_b89b55f536_b.jpg" alt="Memory 9" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780478266_80085ca27e_b.jpg" alt="Memory 10" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780809730_f29777ef62_b.jpg" alt="Memory 11" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780706939_464ccef4d5_b.jpg" alt="Memory 12" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780478271_48d3c0855d_b.jpg" alt="Memory 13" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54782830509_8280698e4e_b.jpg" alt="Memory 14" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780478341_038352ea3e_b.jpg" alt="Memory 15" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780478406_5629f663cf_b.jpg" alt="Memory 16" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780809865_0c1e9e0a7d_b.jpg" alt="Memory 17" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54779629347_7e3fa5080c_b.jpg" alt="Memory 18" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780478456_ce44983447_b.jpg" alt="Memory 19" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780478491_29eb3c0236_b.jpg" alt="Memory 20" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780707169_7e134224b4_b.jpg" alt="Memory 21" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54779629422_4a10208b2b_b.jpg" alt="Memory 22" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780478561_dff2239b24_b.jpg" alt="Memory 23" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780451921_c15df1e963_b.jpg" alt="Memory 24" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780478631_1e91d606ac_b.jpg" alt="Memory 25" tabindex="0" loading="lazy" />
+	<img src="https://live.staticflickr.com/65535/54780478786_79896cc013_b.jpg" alt="Memory 26" tabindex="0" loading="lazy" />
+	<img src="https://live.staticflickr.com/65535/54779728727_e28e0231e6_b.jpg" alt="Memory 27" tabindex="0" loading="lazy" />
+	<img src="https://live.staticflickr.com/65535/54782807959_4d5d68973f_b.jpg" alt="Memory 28" tabindex="0" loading="lazy" />
+	 <img src="https://live.staticflickr.com/65535/54782178704_d9f43903f6_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54782830529_deea9daf8d_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54782275020_86915baf32_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54781946926_efab677afe_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54782480054_0056a8d2c3_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54782271369_d2ca9c7f1d_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54782813434_6dd320d7df_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54780809805_c98ffbb6f0_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54782794159_89f0170316_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+      <img src="https://live.staticflickr.com/65535/54783392751_4d6c155a4e_c.jpg" alt="Memory" tabindex="0" loading="lazy" />
+	<img src="https://live.staticflickr.com/65535/54782978330_cbabd4dddd_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+	<img src="https://live.staticflickr.com/65535/54782585351_cc01665be7_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+	<img src="https://live.staticflickr.com/65535/54783637983_e3eaab82d0_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+	<img src="https://live.staticflickr.com/65535/54783730400_7659a3acf6_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+	<img src="https://live.staticflickr.com/65535/54782549747_904901c43f_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+	<img src="https://live.staticflickr.com/65535/54780478706_03a69be0b8_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+	<img src="https://live.staticflickr.com/65535/54783669178_f41ac1193e_b.jpg" alt="Memory" tabindex="0" loading="lazy" />
+				
+    </div>
+    <div id="lightbox" tabindex="0" role="dialog" aria-label="Image viewer">
+      <button id="lightbox-close" aria-label="Close viewer" type="button">&times;</button>
+      <button id="lightbox-prev" aria-label="Previous image" type="button">&#9664;</button>
+      <img id="lightbox-img" src="" alt="" />
+      <button id="lightbox-next" aria-label="Next image" type="button">&#9654;</button>
+    </div></section>
+
+
+  <section id="messages" style="display: none;">
+    <div class="message-section" aria-label="Anniversary messages">
+      <p>My dearest Ruhu,</p>
+
+<p>Happiest Anniversary to the Love of my Life ! Just saying this makes me feel so elated and overwhelmed Ruhuuu.... 🥹🥹🥹
+Its been a year ( ideally way more than a year ) that I found my love in my best friend but still it feels like ....Are kal hi toh pyaar hua tha aapse😍😍</p>
+
+<p>You have no idea how amazing my life has been with you being in it. The lovliesttttt year of my lifeeee.....(⁠｡⁠♡⁠‿⁠♡⁠｡⁠)From restricted calls when you went to the terrace to hours of late night video calls , from waiting for weeks to meet each other to long cab rides and everything in between, every moment with you just felt so surreal. You have made my ordinary life extraordinary baby 😚</p>
+
+<p>I am just falling short of words right now. It's such a wonderful feeling to be loved by you. Having a partner like you who is so thoughful, pure hearted, beautiful, career oriented, hardworking, wholesome, passionate - who always goes against all odds to make their partner happy - its just a blessing in disguise. Merely thinking about you excites me to a differnt high bub. I love how my heart feels when you hug me.
+The way your care for me and get all excited for me fills me up so much yaar - I am the luckiest that you are The One for me Zalak 🫰🥺. </p>
+
+<p>Each day with you is like a scene from my favourite movie and your giggle my favorite song 💖
+I just love the dorkiness of Us 🤩🤩🤩🤩. You are so adorable when we do random wierd stuff with each other 😘. Laughing with you annoying is the best part of my dayyy and I still can't believe that I get to do that all my life 🥹</p>
+
+<p>Your smile and warmth is what helps me get through the day Ruhu - My calm in the chaos. Thankyou for being my safe haven and making my life the dream I could never even imagine 🥺. When I am with you , life feels perfect...you are my true happiness baby. You complete me in the most beautiful way boo....🫶</p>
+
+
+<p>On this special day of ours , I just want promise to walk this journey of life with you, to love you fiercely through every joy, season, reason and situation ; to honour and respect you, to cherish you and never let a day go without letting you know how much you mean to me Zalak. And also trouble you a lottttttttttttttttt 🤪🤪🤪🤪</p>
+
+<p>I lovee you ♾️ meri jaaann meri queen meri wierdo and meri partner in crime.
+ So eager to spend life with youuuuuuu sweetu.</p><p> Cheers to countless more years of love and fun with my constant 🥂
+
+<p>Yours forever</p>
+<p>Kinu.</p>
+    </div>
+  </section>
+</div>
+<footer>
+  My Heart skips a beat everytime you Smile !
+</footer>
+<script>
+  function showSection(sectionId) {
+    const sections = ['home', 'photos', 'music', 'messages'];
+    sections.forEach(id => {
+      document.getElementById(id).style.display = (id === sectionId) ? 'block' : 'none';
+    });
+  }
+  
+  const albumImgs = document.querySelectorAll('.photo-album img');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+  
+  let currentIndex = -1;
+  
+  function openLightbox(index) {
+    if (index < 0 || index >= albumImgs.length) return;
+    currentIndex = index;
+    lightboxImg.src = albumImgs[currentIndex].src;
+    lightboxImg.alt = albumImgs[currentIndex].alt;
+    lightbox.classList.add('open');
+    lightbox.focus();
+  }
+  
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    currentIndex = -1;
+  }
+  
+  function showPrev() {
+    if (currentIndex > 0) {
+      openLightbox(currentIndex - 1);
+    }
+  }
+  
+  function showNext() {
+    if (currentIndex < albumImgs.length - 1) {
+      openLightbox(currentIndex + 1);
+    }
+  }
+  
+  albumImgs.forEach((img, index) => {
+    img.addEventListener('click', () => openLightbox(index));
+    img.addEventListener('keypress', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        openLightbox(index);
+      }
+    });
+  });
+  
+  closeBtn.addEventListener('click', closeLightbox);
+  prevBtn.addEventListener('click', showPrev);
+  nextBtn.addEventListener('click', showNext);
+  
+  lightbox.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+    else if (e.key === 'ArrowLeft') showPrev();
+    else if (e.key === 'ArrowRight') showNext();
+  });
+  
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+</script>
+</body>
+</html>
